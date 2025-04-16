@@ -185,7 +185,7 @@
                         <span class="tag">Sate</span>
                         <span class="tag">Tradisional</span>
                     </div>
-                    <a href="pages/sate" class="cta-button">Lihat Menu Lengkap</a>
+                    <a href="<?= site_url('pages/sate') ?>" class="cta-button">Lihat Menu Lengkap</a>
                 </div>
             </div>
             
@@ -202,7 +202,7 @@
                         <span class="tag">Jepang</span>
                         <span class="tag">Katsu</span>
                     </div>
-                    <a href="pages/sakuraBento" class="cta-button">Lihat Menu Lengkap</a>
+                    <a href="<?= site_url('pages/sakuraBento') ?>" class="cta-button">Lihat Menu Lengkap</a>
                 </div>
             </div>
             
@@ -219,7 +219,7 @@
                         <span class="tag">Fusion</span>
                         <span class="tag">Modern</span>
                     </div>
-                    <a href="pages/igaBakar" class="cta-button">Lihat Menu Lengkap</a>
+                    <a href="<?= site_url('pages/igaBakar') ?>" class="cta-button">Lihat Menu Lengkap</a>
                 </div>
             </div>
             
@@ -236,7 +236,7 @@
                         <span class="tag">Lokal</span>
                         <span class="tag">Spesial</span>
                     </div>
-                    <a href="pages/ayamGepuk" class="cta-button">Lihat Menu Lengkap</a>
+                    <a href="<?= site_url('pages/ayamGepuk') ?>" class="cta-button">Lihat Menu Lengkap</a>
                 </div>
             </div>
             
@@ -253,7 +253,7 @@
                         <span class="tag">Internasional</span>
                         <span class="tag">Pasta</span>
                     </div>
-                    <a href="pages/pasta" class="cta-button">Lihat Menu Lengkap</a>
+                    <a href="<?= site_url('pages/pasta') ?>" class="cta-button">Lihat Menu Lengkap</a>
                 </div>
             </div>
         </div>

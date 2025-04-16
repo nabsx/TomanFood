@@ -192,7 +192,7 @@
             </div>
         <?php endif; ?>
         
-        <form method="post" action="<?= site_url('login/login'); ?>">
+        <form method="post" action="<?= site_url('auth/login'); ?>">
             <div class="form-group">
                 <label for="username">Username</label>
                 <input type="text" id="username" name="username" placeholder="Masukkan Username" required>
@@ -214,7 +214,7 @@
         </form>
         
         <p class="register-link">
-            Belum punya akun? <a href="<?= site_url('login/Register'); ?>">Daftar sekarang</a>
+            Belum punya akun? <a href="<?= site_url('auth/register'); ?>">Daftar sekarang</a>
         </p>
     </div>
 

@@ -55,17 +55,6 @@ class Home extends BaseController
         ];
         return view ('pages/pasta',$data);
     }
-    public function login(){
-        $data = [
-            'title' => 'login'
-        ];
-        return view ('login/login',$data);
-    }
-    public function register(){
-        $data = [
-            'title' => 'register'
-        ];
-        return view ('login/Register',$data);
-    }
-
+    
+  
 }

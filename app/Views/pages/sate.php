@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pesanan & Pembayaran</title>
     <style>
+        /* CSS tetap sama seperti sebelumnya */
         * {
             margin: 0;
             padding: 0;
@@ -281,7 +282,7 @@
                     <div class="menu-item-price">Rp 35.000</div>
                 </div>
                 <div class="menu-item-actions">
-                    <button class="add-btn" onclick="addToCart('Sate Ayam', 35000)">+ Tambah</button>
+                    <button class="add-btn" onclick="addToCart(1, 'Sate Ayam', 35000)">+ Tambah</button>
                 </div>
             </div>
             
@@ -292,7 +293,7 @@
                     <div class="menu-item-price">Rp 45.000</div>
                 </div>
                 <div class="menu-item-actions">
-                    <button class="add-btn" onclick="addToCart('Sate Kambing', 45000)">+ Tambah</button>
+                    <button class="add-btn" onclick="addToCart(2, 'Sate Kambing', 45000)">+ Tambah</button>
                 </div>
             </div>
             
@@ -303,7 +304,7 @@
                     <div class="menu-item-price">Rp 40.000</div>
                 </div>
                 <div class="menu-item-actions">
-                    <button class="add-btn" onclick="addToCart('Sate Maranggi', 40000)">+ Tambah</button>
+                    <button class="add-btn" onclick="addToCart(3, 'Sate Maranggi', 40000)">+ Tambah</button>
                 </div>
             </div>
             
@@ -314,7 +315,7 @@
                     <div class="menu-item-price">Rp 5.000</div>
                 </div>
                 <div class="menu-item-actions">
-                    <button class="add-btn" onclick="addToCart('Nasi Putih', 5000)">+ Tambah</button>
+                    <button class="add-btn" onclick="addToCart(4, 'Nasi Putih', 5000)">+ Tambah</button>
                 </div>
             </div>
             
@@ -325,7 +326,7 @@
                     <div class="menu-item-price">Rp 7.000</div>
                 </div>
                 <div class="menu-item-actions">
-                    <button class="add-btn" onclick="addToCart('Es Teh Manis', 7000)">+ Tambah</button>
+                    <button class="add-btn" onclick="addToCart(5, 'Es Teh Manis', 7000)">+ Tambah</button>
                 </div>
             </div>
         </div>
@@ -398,18 +399,21 @@
         let cart = [];
         let deliveryFee = 10000;
         let taxRate = 0.1;
+        let selectedPayment = 'cash'; // Tambahkan ini di bagian deklarasi variabel     
+        
         
         function formatRupiah(amount) {
             return 'Rp ' + amount.toLocaleString('id-ID');
         }
         
-        function addToCart(name, price) {
-            let existingItem = cart.find(item => item.name === name);
+        function addToCart(menuId, name, price) {
+            let existingItem = cart.find(item => item.menu_id === menuId);
             
             if (existingItem) {
                 existingItem.quantity += 1;
             } else {
                 cart.push({
+                    menu_id: menuId,
                     name: name,
                     price: price,
                     quantity: 1
@@ -485,110 +489,73 @@
             paymentSectionElement.style.display = 'block';
         }
         
-        function selectPayment(element) {
-            document.querySelectorAll('.payment-option').forEach(option => {
-                option.classList.remove('selected');
-            });
-            
-            element.classList.add('selected');
-            element.querySelector('input').checked = true;
-        }
+        // Fungsi selectPayment yang diperbarui
+function selectPayment(element) {
+    document.querySelectorAll('.payment-option').forEach(option => {
+        option.classList.remove('selected');
+    });
+    
+    element.classList.add('selected');
+    selectedPayment = element.querySelector('input').id; // Update selectedPayment
+}
         
         function checkout() {
-            if (cart.length === 0) {
-                alert('Silakan tambahkan menu ke keranjang terlebih dahulu.');
-                return;
-            }
-            
-            const selectedPayment = document.querySelector('input[name="payment"]:checked').id;
-            
-            alert(`Terima kasih atas pesanan Anda!\nPesanan Anda sedang diproses.\nMetode pembayaran: ${selectedPayment}`);
-            
-            // Reset cart
+    if (cart.length === 0) {
+        alert('Keranjang Anda masih kosong');
+        return;
+    }
+
+    // Hitung total
+    const subtotal = cart.reduce((total, item) => total + (item.price * item.quantity), 0);
+    const tax = subtotal * taxRate;
+    const total = subtotal + tax + deliveryFee;
+
+    // Siapkan data untuk dikirim ke server
+    const orderData = {
+        customer_name: "Nama Pelanggan", // Ganti dengan input dari form
+        payment_method: selectedPayment,
+        items: cart.map(item => ({
+            menu_id: item.menu_id,
+            quantity: item.quantity,
+            price: item.price
+        }))
+    };
+
+    console.log('Data yang dikirim:', orderData); // Debugging
+
+    // Kirim data ke server
+    fetch('/order/checkout', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-Requested-With': 'XMLHttpRequest',
+            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+        },
+        body: JSON.stringify(orderData)
+    })
+    .then(response => {
+        if (!response.ok) {
+            return response.json().then(err => { throw err; });
+        }
+        return response.json();
+    })
+    .then(data => {
+        if (data.success) {
+            alert('Pesanan berhasil diproses! ID Pesanan: ' + data.order_id);
             cart = [];
             updateCart();
+        } else {
+            throw new Error(data.message || 'Gagal memproses pesanan');
         }
-        
-        // Toggle between restaurants (just for demo)
-        function changeRestaurant(name) {
-            const restaurantName = document.getElementById('restaurant-name');
-            const restaurantDesc = document.getElementById('restaurant-desc');
-            
-            if (name === 'sakura') {
-                restaurantName.textContent = 'Sakura Bento';
-                restaurantDesc.textContent = 'Kelezatan Jepang dalam setiap gigitan! Menghadirkan hidangan khas Jepang seperti Chicken Katsu, Beef Yakiniku, dan Tempura yang otentik.';
-                
-                // Change menu items
-                document.querySelector('.menu-section').innerHTML = `
-                    <h3 class="section-title">Menu</h3>
-                    
-                    <div class="menu-item">
-                        <div class="menu-item-info">
-                            <div class="menu-item-title">Chicken Katsu</div>
-                            <div class="menu-item-desc">Ayam katsu renyah dengan saus tonkatsu</div>
-                            <div class="menu-item-price">Rp 50.000</div>
-                        </div>
-                        <div class="menu-item-actions">
-                            <button class="add-btn" onclick="addToCart('Chicken Katsu', 50000)">+ Tambah</button>
-                        </div>
-                    </div>
-                    
-                    <div class="menu-item">
-                        <div class="menu-item-info">
-                            <div class="menu-item-title">Beef Yakiniku</div>
-                            <div class="menu-item-desc">Daging sapi panggang dengan saus yakiniku</div>
-                            <div class="menu-item-price">Rp 65.000</div>
-                        </div>
-                        <div class="menu-item-actions">
-                            <button class="add-btn" onclick="addToCart('Beef Yakiniku', 65000)">+ Tambah</button>
-                        </div>
-                    </div>
-                    
-                    <div class="menu-item">
-                        <div class="menu-item-info">
-                            <div class="menu-item-title">Tempura Udang</div>
-                            <div class="menu-item-desc">5 buah tempura udang dengan saus tentsuyu</div>
-                            <div class="menu-item-price">Rp 45.000</div>
-                        </div>
-                        <div class="menu-item-actions">
-                            <button class="add-btn" onclick="addToCart('Tempura Udang', 45000)">+ Tambah</button>
-                        </div>
-                    </div>
-                    
-                    <div class="menu-item">
-                        <div class="menu-item-info">
-                            <div class="menu-item-title">Salmon Sushi</div>
-                            <div class="menu-item-desc">8 pcs salmon sushi</div>
-                            <div class="menu-item-price">Rp 70.000</div>
-                        </div>
-                        <div class="menu-item-actions">
-                            <button class="add-btn" onclick="addToCart('Salmon Sushi', 70000)">+ Tambah</button>
-                        </div>
-                    </div>
-                    
-                    <div class="menu-item">
-                        <div class="menu-item-info">
-                            <div class="menu-item-title">Ocha</div>
-                            <div class="menu-item-desc">Teh hijau Jepang</div>
-                            <div class="menu-item-price">Rp 15.000</div>
-                        </div>
-                        <div class="menu-item-actions">
-                            <button class="add-btn" onclick="addToCart('Ocha', 15000)">+ Tambah</button>
-                        </div>
-                    </div>
-                `;
-            } else {
-                restaurantName.textContent = 'Sate Khas Nusantara';
-                restaurantDesc.textContent = 'Warisan rasa yang melekat di hati! Di "Sate Mas Joko", kami menyajikan sate dengan daging pilihan yang dibakar sempurna, berpadu dengan bumbu tradisional.';
-                
-                // Reset to default menu
-                location.reload();
-            }
-            
-            // Clear cart when switching restaurants
-            cart = [];
-            updateCart();
-        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('Error: ' + error.message);
+    }
+    
+
+      );
+}
     </script>
 </body>
 </html>

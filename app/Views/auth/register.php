@@ -1,4 +1,6 @@
-<?= $this->extend('layouts/template'); ?>
+
+
+<?= $this->extend('layout/template'); ?>
 
 <?= $this->section('content'); ?>
 <div class="register-container">
