@@ -26,13 +26,18 @@ class Home extends BaseController
         return view ('pages/sakuraBento',$data);
     }
 
-    public function admin(){
-        $data = [
-            'title' => 'Admin'
-        ];
-        return view ('head/admin',$data);
+   // Ubah fungsi admin di Home.php
+public function admin(){
+    // Cek apakah user adalah admin
+    if (!session()->get('isLoggedIn') || session()->get('username') != 'admin') {
+        return redirect()->to('/auth/login')->with('error', 'Anda harus login sebagai admin');
     }
-
+    
+    $data = [
+        'title' => 'Admin Dashboard'
+    ];
+    return view ('head/admin', $data);
+}
     public function igaBakar(){
         $data = [
             'title' => 'Iga Bakar'

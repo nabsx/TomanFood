@@ -23,9 +23,8 @@ class Auth extends BaseController
     }
     
     public function login()
-    {
-        {
-            // Validasi input
+{
+    // Validasi input
     $rules = [
         'username' => 'required',
         'password' => 'required'
@@ -44,21 +43,28 @@ class Auth extends BaseController
     $user = $userModel->where('username', $username)->first();
     
     if ($user && password_verify($password, $user['password'])) {
-        // Login berhasil
-        $this->session->set('isLoggedIn', true);
-        $this->session->set('userId', $user['id']);
+        // Login berhasil - Perbaikan penyimpanan session
+        $sessionData = [
+            'isLoggedIn' => true,
+            'userId' => $user['id'],
+            'username' => $user['username']
+        ];
+        
+        $this->session->set($sessionData);
         
         // Cek apakah user adalah admin
-        if ($username === 'admin') {  // atau Anda bisa menggunakan field role misalnya $user['role'] === 'admin'
-            return redirect()->to('head/admin');  // Redirect ke halaman admin
+        if ($username === 'admin') {
+            return redirect()->to('admin'); // Redirect ke halaman admin dashboard
         } else {
-            return redirect()->to('layout/home');  // Redirect ke halaman biasa
+            return redirect()->to('layout/home');  // Redirect ke halaman utama
         }
     } else {
         // Login gagal
-        return redirect()->back()->with('error', 'Username atau password salah');}
-        }
+        return redirect()->back()->with('error', 'Username atau password salah');
     }
+}
+
+    
     
     public function register()
     {
