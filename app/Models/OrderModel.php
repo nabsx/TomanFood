@@ -6,14 +6,12 @@ class OrderModel extends Model
 {
     protected $table = 'orders';
     protected $primaryKey = 'id';
-    protected $allowedFields = ['customer_name', 'payment_method', 'created_at'];
-    protected $useTimestamps = true;
-    protected $createdField = 'created_at';
-    protected $updatedField = 'updated_at';
-
-    public function createOrder($data)
-    {
-        $this->insert($data);
-        return $this->insertID();
-    }
+    protected $returnType = 'array';
+    
+    protected $allowedFields = [
+        'restaurant_id', 'menu_id', 'menu_name', 'quantity', 'price', 'total', 'created_at'
+    ];
+    
+    protected $useTimestamps = false;
+    protected $useSoftDeletes = false;
 }

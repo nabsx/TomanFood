@@ -499,62 +499,81 @@ function selectPayment(element) {
     selectedPayment = element.querySelector('input').id; // Update selectedPayment
 }
         
-        function checkout() {
+function checkout() {
     if (cart.length === 0) {
-        alert('Keranjang Anda masih kosong');
+        alert('Silakan tambahkan menu ke keranjang terlebih dahulu.');
         return;
     }
 
-    // Hitung total
-    const subtotal = cart.reduce((total, item) => total + (item.price * item.quantity), 0);
-    const tax = subtotal * taxRate;
-    const total = subtotal + tax + deliveryFee;
+    // Tambahkan nama pelanggan
+    const customerName = document.getElementById('customer_name') ? 
+                        document.getElementById('customer_name').value : 'Pelanggan';
+    
+    // Ambil metode pembayaran yang dipilih
+    const paymentMethod = document.querySelector('input[name="payment"]:checked').id;
 
-    // Siapkan data untuk dikirim ke server
+    // Siapkan data
     const orderData = {
-        customer_name: "Nama Pelanggan", // Ganti dengan input dari form
-        payment_method: selectedPayment,
+        customer_name: customerName,
+        payment_method: paymentMethod,
         items: cart.map(item => ({
             menu_id: item.menu_id,
+            name: item.name,
             quantity: item.quantity,
             price: item.price
         }))
     };
 
-    console.log('Data yang dikirim:', orderData); // Debugging
+    // Dapatkan CSRF token
+    const csrfName = document.querySelector('meta[name="csrf-token-name"]')?.content || 'csrf_test_name';
+    const csrfToken = document.querySelector('meta[name="csrf-token"]')?.content || '';
+    
+    // Buat header dengan CSRF
+    const headers = {
+        'Content-Type': 'application/json',
+        'X-Requested-With': 'XMLHttpRequest'
+    };
+    
+    // Tambahkan CSRF token ke header jika tersedia
+    if (csrfToken) {
+        headers[csrfName] = csrfToken;
+    }
 
-    // Kirim data ke server
+    // Tampilkan indikator loading
+    const checkoutBtn = document.querySelector('.checkout-btn');
+    checkoutBtn.disabled = true;
+    checkoutBtn.textContent = 'Memproses...';
+
+    // Kirim request
     fetch('/order/checkout', {
         method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'X-Requested-With': 'XMLHttpRequest',
-            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-        },
+        headers: headers,
         body: JSON.stringify(orderData)
     })
     .then(response => {
         if (!response.ok) {
-            return response.json().then(err => { throw err; });
+            throw new Error(`Status: ${response.status}, Message: ${response.statusText}`);
         }
         return response.json();
     })
     .then(data => {
+        checkoutBtn.disabled = false;
+        checkoutBtn.textContent = 'Bayar Sekarang';
+        
         if (data.success) {
-            alert('Pesanan berhasil diproses! ID Pesanan: ' + data.order_id);
+            alert(`Pesanan berhasil diproses!\nNomor Pesanan: ${data.order_id}\nTerima kasih telah memesan.`);
             cart = [];
             updateCart();
         } else {
-            throw new Error(data.message || 'Gagal memproses pesanan');
+            alert('Gagal memproses pesanan: ' + (data.message || 'Terjadi kesalahan pada server'));
         }
     })
     .catch(error => {
         console.error('Error:', error);
-        alert('Error: ' + error.message);
-    }
-    
-
-      );
+        checkoutBtn.disabled = false;
+        checkoutBtn.textContent = 'Bayar Sekarang';
+        alert('Terjadi kesalahan saat memproses pesanan. Silakan coba lagi.');
+    });
 }
     </script>
 </body>
