@@ -250,7 +250,7 @@
                 </div>
                 
                 <li class="nav-item">
-                    <a class="nav-link" href="<?= site_url('auth/logout') ?>">
+                    <a class="nav-link" href="<?= site_url('auth/login') ?>">
                         <i class="fas fa-fw fa-sign-out-alt"></i>
                         <span>Logout</span>
                     </a>

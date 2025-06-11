@@ -5,7 +5,8 @@ use CodeIgniter\Router\RouteCollection;
 /**
  * @var RouteCollection $routes
  */
-$routes->get('layout/home', 'Home::index');
+$routes->get('/', 'Home::index');
+$routes->get('layout/home', 'Home::restoran');
 $routes->get('pages/sate', 'Home::sate');
 $routes->get('pages/sakuraBento', 'Home::sakuraBento');
 $routes->get('head/admin', 'Home::admin');
@@ -17,7 +18,7 @@ $routes->get('pages/pasta', 'Home::pasta');
 
 
 // Tambahkan route ini ke app/Config/Routes.php
-$routes->get('/', 'Auth::index');  // Untuk menampilkan halaman login
+$routes->get('auth/login', 'Auth::index');    // Untuk menampilkan halaman login
 $routes->post('auth/login', 'Auth::login'); // Untuk memproses login
 $routes->get('auth/login', 'Auth::index'); // Jika diakses via GET ke auth/login
 $routes->get('auth/register', 'Auth::register');

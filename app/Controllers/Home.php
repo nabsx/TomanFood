@@ -3,8 +3,16 @@
 namespace App\Controllers;
 
 class Home extends BaseController
-{
+{   
+
     public function index(): string
+    {
+        $data = [
+            'title' => 'Restoran'
+        ];
+        return view('layout/dashboard', $data);
+    }
+    public function restoran(): string
     {
         $data = [
             'title' => 'Restoran'
