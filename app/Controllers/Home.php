@@ -17,7 +17,7 @@ class Home extends BaseController
         $data = [
             'title' => 'Restoran'
         ];
-        return view('layout/home', $data);
+        return view('layout/RestoSate', $data);
     }
 
     public function sate(){

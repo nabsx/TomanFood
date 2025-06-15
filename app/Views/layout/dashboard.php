@@ -20,6 +20,39 @@
             box-shadow: 0 2px 10px rgba(0,0,0,0.1);
             backdrop-filter: none;
         }
+        
+        /* Styling untuk logo - default putih, berubah ke orange saat scroll */
+        .navbar-logo {
+            color: white;
+            transition: color 0.3s ease;
+        }
+        .navbar.scrolled .navbar-logo {
+            color: #ff6b35;
+        }
+        
+        /* Styling untuk menu links - default putih, berubah ke abu-abu gelap saat scroll */
+        .navbar-link {
+            color: white;
+            transition: color 0.3s ease;
+        }
+        .navbar.scrolled .navbar-link {
+            color: #374151;
+        }
+        .navbar.scrolled .navbar-link:hover {
+            background-color: rgba(107, 114, 128, 0.1);
+        }
+        
+        /* Styling untuk tombol login - tetap putih background dengan text orange */
+        .navbar-login {
+            background: white;
+            color: #ff6b35;
+            transition: all 0.3s ease;
+        }
+        .navbar.scrolled .navbar-login {
+            background: #ff6b35;
+            color: white;
+        }
+        
         .card-image {
             filter: brightness(0.6);
         }
@@ -32,12 +65,12 @@
     <!-- Navigation -->
     <nav id="navbar" class="navbar fixed top-0 w-full py-4 px-8 z-50 transition-all duration-300">
         <div class="max-w-6xl mx-auto px-5 flex justify-between items-center">
-            <a href="#" class="text-white text-2xl font-bold">TomanFood</a>
+            <a href="#" class="navbar-logo text-2xl font-bold">TomanFood</a>
             <div class="flex items-center gap-5">
-                <a href="#" class="text-white font-medium px-4 py-2 rounded-full hover:bg-white/20 transition">Beranda</a>
-                <a href="#" class="text-white font-medium px-4 py-2 rounded-full hover:bg-white/20 transition">Promo</a>
-                <a href="#" class="text-white font-medium px-4 py-2 rounded-full hover:bg-white/20 transition">Bantuan</a>
-                <a href="#" class="bg-white text-[#ff6b35] font-semibold px-5 py-2 rounded-full hover:-translate-y-0.5 transition">Masuk</a>
+                <a href="#" class="navbar-link font-medium px-4 py-2 rounded-full hover:bg-white/20 transition">Beranda</a>
+                <a href="#" class="navbar-link font-medium px-4 py-2 rounded-full hover:bg-white/20 transition">Promo</a>
+                <a href="#" class="navbar-link font-medium px-4 py-2 rounded-full hover:bg-white/20 transition">Bantuan</a>
+                <a href="#" class="navbar-login font-semibold px-5 py-2 rounded-full hover:-translate-y-0.5 transition">Masuk</a>
             </div>
         </div>
     </nav>
@@ -48,8 +81,8 @@
             <h1 class="text-5xl font-bold mb-5">Pesan Makanan Favorit Anda</h1>
             <p class="text-xl opacity-90 max-w-2xl mx-auto mb-8">Restoran terbaik siap mengantarkan kelezatan langsung ke depan pintu Anda</p>
             <div class="max-w-lg mx-auto relative p-2.5 bg-white rounded-full shadow-lg">
-                <input type="text" class="w-full py-4 pl-5 pr-14 border-none rounded-full shadow-inner focus:outline-none" placeholder="Cari restoran atau makanan favorit...">
-                <button class="absolute right-3 top-1/2 -translate-y-1/2 bg-gradient-to-r from-[#ff6b35] to-[#f7931e] text-white px-4 py-2.5 rounded-full shadow-md hover:shadow-lg hover:-translate-y-[55%] transition">
+                <input type="text" class="search-input w-full py-4 pl-5 pr-14 border-none rounded-full shadow-inner focus:outline-none text-gray-900" placeholder="Cari restoran atau makanan favorit...">
+                <button class="search-btn absolute right-3 top-1/2 -translate-y-1/2 bg-gradient-to-r from-[#ff6b35] to-[#f7931e] text-white px-4 py-2.5 rounded-full shadow-md hover:shadow-lg hover:-translate-y-[55%] transition">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                     </svg>
@@ -63,8 +96,8 @@
         <section class="mb-12">
             <h2 class="text-3xl font-semibold text-center mb-8 text-gray-800">Pilih Kategori Makanan</h2>
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
-                <a href="#" class="category-card relative block rounded-xl overflow-hidden h-64 text-white">
-                    <div class="card-image absolute inset-0 bg-cover bg-center" style="background-image: url('/img/sate.jpg');"></div>
+                <a href="<?= site_url('layout/RestoSate') ?>" class="category-card relative block rounded-xl overflow-hidden h-64 text-white">
+                    <div class="card-image absolute inset-0 bg-cover bg-center" style="background-image: url('img/sate.jpg')"></div>
                     <div class="card-overlay absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
                     <div class="card-content absolute bottom-0 p-4">
                         <h3 class="text-xl font-semibold">Restoran Sate</h3>
@@ -73,8 +106,8 @@
                     </div>
                 </a>
 
-                <a href="#" class="category-card relative block rounded-xl overflow-hidden h-64 text-white">
-                    <div class="card-image absolute inset-0 bg-cover bg-center" style="background-image: url('/img/katsu.jpg');"></div>
+                <a href="<?= site_url('layout/RestoJepang') ?>" class="category-card relative block rounded-xl overflow-hidden h-64 text-white">
+                    <div class="card-image absolute inset-0 bg-cover bg-center" style="background-image: url('img/katsu.jpg')"></div>
                     <div class="card-overlay absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
                     <div class="card-content absolute bottom-0 p-4">
                         <h3 class="text-xl font-semibold">Japanese Food</h3>
@@ -83,8 +116,8 @@
                     </div>
                 </a>
 
-                <a href="#" class="category-card relative block rounded-xl overflow-hidden h-64 text-white">
-                    <div class="card-image absolute inset-0 bg-cover bg-center" style="background-image: url('/img/spageti.jpg');"></div>
+                <a href="<?= site_url('layout/RestoWestern') ?>" class="category-card relative block rounded-xl overflow-hidden h-64 text-white">
+                    <div class="card-image absolute inset-0 bg-cover bg-center" style="background-image: url('img/spageti.jpg')"></div>
                     <div class="card-overlay absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
                     <div class="card-content absolute bottom-0 p-4">
                         <h3 class="text-xl font-semibold">Western Food</h3>
@@ -93,8 +126,8 @@
                     </div>
                 </a>
 
-                <a href="#" class="category-card relative block rounded-xl overflow-hidden h-64 text-white">
-                    <div class="card-image absolute inset-0 bg-cover bg-center" style="background-image: url('/img/iga.jpg');"></div>
+                <a href="<?= site_url('layout/RestoIga') ?>" class="category-card relative block rounded-xl overflow-hidden h-64 text-white">
+                    <div class="card-image absolute inset-0 bg-cover bg-center" style="background-image: url('img/iga.jpg')"></div>
                     <div class="card-overlay absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
                     <div class="card-content absolute bottom-0 p-4">
                         <h3 class="text-xl font-semibold">Iga Pilihan</h3>

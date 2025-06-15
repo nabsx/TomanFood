@@ -6,7 +6,7 @@ use CodeIgniter\Router\RouteCollection;
  * @var RouteCollection $routes
  */
 $routes->get('/', 'Home::index');
-$routes->get('layout/home', 'Home::restoran');
+$routes->get('layout/RestoSate', 'Home::restoran');
 $routes->get('pages/sate', 'Home::sate');
 $routes->get('pages/sakuraBento', 'Home::sakuraBento');
 $routes->get('head/admin', 'Home::admin');
