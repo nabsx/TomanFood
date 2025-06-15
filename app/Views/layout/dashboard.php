@@ -70,7 +70,7 @@
                 <a href="#" class="navbar-link font-medium px-4 py-2 rounded-full hover:bg-white/20 transition">Beranda</a>
                 <a href="#" class="navbar-link font-medium px-4 py-2 rounded-full hover:bg-white/20 transition">Promo</a>
                 <a href="#" class="navbar-link font-medium px-4 py-2 rounded-full hover:bg-white/20 transition">Bantuan</a>
-                <a href="#" class="navbar-login font-semibold px-5 py-2 rounded-full hover:-translate-y-0.5 transition">Masuk</a>
+                <a href="auth/login" class="navbar-login font-semibold px-5 py-2 rounded-full hover:-translate-y-0.5 transition">Masuk</a>
             </div>
         </div>
     </nav>

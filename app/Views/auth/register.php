@@ -1,6 +1,36 @@
 
 
+
+
+
 <?= $this->extend('layout/template'); ?>
+
+
+
+
+
+<?= $this->section('styles'); ?>
+<style>
+    body {
+        background-color: bg-gradient-to-r from-[#e74c3c] to-[#e67e22]
+; /* Ganti warna sesuai keinginan */
+        background-image: url('<?= base_url("assets/img/background.jpg") ?>'); /* Jika pakai gambar */
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+    }
+
+    .register-container {
+        background: rgba(255, 255, 255, 0.9); /* biar form tetap putih dan terlihat */
+        padding: 30px;
+        border-radius: 10px;
+        max-width: 500px;
+        margin: 50px auto;
+        box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+</style>
+<?= $this->endSection(); ?>
+
 
 <?= $this->section('content'); ?>
 <div class="register-container">

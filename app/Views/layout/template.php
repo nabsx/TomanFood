@@ -11,16 +11,16 @@
             box-sizing: border-box;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
-        
+
         body {
-            background: linear-gradient(135deg, #6366F1 0%, #8B5CF6 100%);
+            background: linear-gradient(135deg, #e74c3c 0%, #e67e22 100%);
             min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
             padding: 20px;
         }
-        
+
         .register-container {
             background-color: white;
             border-radius: 16px;
@@ -30,25 +30,25 @@
             padding: 40px 30px;
             text-align: center;
         }
-        
+
         .logo {
             font-size: 28px;
             font-weight: bold;
-            color: #6366F1;
+            color: #e74c3c;
             margin-bottom: 10px;
         }
-        
+
         .subtitle {
             color: #64748B;
             font-size: 16px;
             margin-bottom: 30px;
         }
-        
+
         .form-group {
             margin-bottom: 20px;
             text-align: left;
         }
-        
+
         label {
             display: block;
             margin-bottom: 8px;
@@ -56,7 +56,7 @@
             color: #475569;
             font-weight: 500;
         }
-        
+
         input {
             width: 100%;
             padding: 14px 16px;
@@ -65,14 +65,14 @@
             font-size: 16px;
             transition: border-color 0.3s;
         }
-        
+
         input:focus {
             outline: none;
-            border-color: #6366F1;
+            border-color: #e74c3c;
         }
-        
+
         .btn {
-            background: linear-gradient(135deg, #6366F1 0%, #8B5CF6 100%);
+            background: linear-gradient(135deg, #e74c3c 0%, #e67e22 100%);
             color: white;
             border: none;
             border-radius: 8px;
@@ -84,23 +84,23 @@
             transition: opacity 0.3s;
             margin-top: 10px;
         }
-        
+
         .btn:hover {
             opacity: 0.9;
         }
-        
+
         .login-link {
             margin-top: 24px;
             font-size: 14px;
             color: #64748B;
         }
-        
+
         .login-link a {
-            color: #6366F1;
+            color: #e74c3c;
             text-decoration: none;
             font-weight: 500;
         }
-        
+
         .error-message {
             color: #EF4444;
             background-color: #FEE2E2;
@@ -109,7 +109,7 @@
             margin-bottom: 20px;
             font-size: 14px;
         }
-        
+
         .success-message {
             color: #10B981;
             background-color: #D1FAE5;
@@ -118,11 +118,11 @@
             margin-bottom: 20px;
             font-size: 14px;
         }
-        
+
         .password-wrapper {
             position: relative;
         }
-        
+
         .password-toggle {
             position: absolute;
             right: 10px;
@@ -131,12 +131,12 @@
             cursor: pointer;
             color: #64748B;
         }
-        
+
         .name-fields {
             display: flex;
             gap: 15px;
         }
-        
+
         .name-fields .form-group {
             flex: 1;
         }
